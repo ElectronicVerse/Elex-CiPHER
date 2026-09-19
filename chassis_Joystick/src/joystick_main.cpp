@@ -40,16 +40,17 @@ void loop() {
       anti_clockwise();
       Serial.println("Anti-Clockwise");
     } 
-    else if (PS4.LStickY() || PS4.LStickX()){
+    else if ((PS4.RStickY() > 20 || PS4.RStickY() < -20) || (PS4.RStickX() > 20 || PS4.RStickX() < -20)){
       chassis_on_joystick();
       Serial.printf("PWM : %d %d %d %d %d \n", PWM[0], PWM[1], PWM[2], PWM[3]);
     }
     else{
       stop();
       Serial.println("Stop");
-    } 
+    }  
   }
   else {
-     stop();
+     stop(); 
   }
 }
+//made changes in code
