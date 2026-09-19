@@ -1,4 +1,5 @@
 #include <Arduino.h>
+//#include <PS4Controller.h>
 #include "init.h"
 #include "kinematics_joystick.h"
 
@@ -58,10 +59,30 @@ void anti_clockwise(){
 }
 
 void chassis_on_joystick(){
-    motor.motion(0, PWM[0], 0);
-    motor.motion(1, PWM[1], 0);
-    motor.motion(2, 0, PWM[2]);
-    motor.motion(3, 0, PWM[3]);
+    if (PS4.RStickY() > 20 && (abs(PS4.RStickY()) > abs(PS4.RStickX()))){
+        motor.motion(0, PWM[0], 0);
+        motor.motion(1, 0, PWM[1]);
+        motor.motion(2, PWM[2], 0);
+        motor.motion(3, 0, PWM[3]);
+    }
+    else if (PS4.RStickY() < -20 && (abs(PS4.RStickY()) > abs(PS4.RStickX()))){
+        motor.motion(0, 0, PWM[0]);
+        motor.motion(1, PWM[1], 0);
+        motor.motion(2, 0, PWM[2]);
+        motor.motion(3, PWM[3], 0);
+    }
+    else if (PS4.RStickX() > 20 && (abs(PS4.RStickY()) < abs(PS4.RStickX()))){
+        motor.motion(0, 0, PWM[0]);
+        motor.motion(1, 0, PWM[1]);
+        motor.motion(2, 0, PWM[2]);
+        motor.motion(3, 0, PWM[3]);
+    }
+    else if (PS4.RStickX() < -20 && (abs(PS4.RStickY()) < abs(PS4.RStickX()))){
+        motor.motion(0, PWM[0], 0);
+        motor.motion(1, PWM[1], 0);
+        motor.motion(2, PWM[2], 0);
+        motor.motion(3, PWM[3], 0);
+    }
 }
 
 void stop(){

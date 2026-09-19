@@ -54,15 +54,17 @@ void cal_pwm(){
     for(int i = 0; i < 4; i++){
         PWM[i] = constrain(pwm[i], -255, 255);
     }
-
 }
 
 
-void cal_joystick(){
-    Vx = map(PS4.LStickY(), -127, 127, -5.0, 5.0);
-    Vy = map(PS4.LStickX(), -127, 127, -5.0, 5.0);
+float mapfloat(float x, float from_low, float from_high, float to_low, float to_high){
+    return (x - from_low)*(to_high - to_low)/(from_high - from_low)+to_low;
+}
 
-   // Serial.printf("Vx = %ld   Vy = %ld\n", Vx, Vy);
+void cal_joystick(){
+    Vx = mapfloat(PS4.RStickY(), -127.0, 127.0, -5.0, 5.0);
+    Vy = mapfloat(PS4.RStickX(), -127.0, 127.0, -5.0, 5.0);
+    //Serial.printf("Vx = %ld   Vy = %ld\n", Vx, Vy);
     //delay(100);
 }
 
